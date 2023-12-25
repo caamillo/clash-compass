@@ -20,12 +20,20 @@ export default function Home() {
   useEffect(() => {
     if (!cards) return
     setCard(getNextCard(progress, cards))
-  }, [ cards, progress ])
+  }, [ cards, progress ]) // On initialize + each time progress changes a new card will be picked up
+
+  const clear = () => {
+    rangeRef.current.value = 50
+  }
 
   const save = () => {
-    setProgress(progress => saveProgress(progress, { right: parseInt(rangeRef.current.value), top: 50 }))
-    rangeRef.current.value = 50
-    setCard(getNextCard(progress, cards))
+    const record = {
+      right: parseInt(rangeRef.current.value),
+      top: 50
+    }
+
+    clear()
+    setProgress(progress => saveProgress(progress, record))
   }
 
   return (
